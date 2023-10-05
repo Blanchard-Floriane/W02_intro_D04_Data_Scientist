@@ -45,50 +45,81 @@ def upper_start(twitter_datas)
 end
 
 def alphabetic_order(twitter_datas)
-  
+  no_at = twitter_datas.map do |handle|
+    handle.gsub("@", "")
+  end
+  sorted_array = no_at.sort_by do |handle| #sort by et je spécifie selon quel critère, ici en applicant la minuscule partout
+    handle.downcase
+  end
+  puts sorted_array
+  return sorted_array #downcase met tous en minuscule afin que le code ASCII ne soit plus un problème, puis sort classe par ordre alpha
+end
+
+def length_order(twitter_datas)
+  sorted_array = twitter_datas.sort_by do |handle|
+    handle.length
+  end
+  puts sorted_array
+  return sorted_array 
+end
+
+def epenser(twitter_datas)
+  return twitter_datas.index("@epenser")
+end
+
+def group_by_size(twitter_datas)
+  new_hash = {}
+  twitter_datas.each do |handle|
+    handle_length = handle.length - 1
+    if new_hash[handle_length].nil?
+      new_hash[handle_length] = 1
+    else
+      new_hash[handle_length] += 1
+    end
+  end
+  result_hash = new_hash.sort.to_h
+  puts result_hash
+  return result_hash
 end
 
 
-upper_start(twitter_datas)
+def perform
+  intro
+  puts "Tape un chiffre compris entre 1 et 8 :"
+  print "> "
+  answer = gets.chomp 
+  case answer
+  when "1"
+    puts "Réponse : Il y en a #{handle_length(twitter_datas)}."
+  when "2"
+    puts "Réponse : Le handle le plus court de la liste est #{shortest_string(twitter_datas)}."
+  when "3"
+    puts "Réponse : Il y a #{five_chrs(twitter_datas)} de 5 caractères (sans comprendre le @)."
+  when "4"
+    puts "Réponse : Il y a #{upper_start(twitter_datas)} handles qui commencent par une majuscule (première lettre juste après le @)."
+  when "5"
+    puts "Voici la liste des handles par ordre alphabétique :" 
+    alphabetic_order(twitter_datas)
+  when "6"
+    puts "Voici la liste des handles triées par taille de la plus petite à la plus grand :"
+    length_order(twitter_datas)
+  when "7"
+    puts "Réponse : le pseudonyme @epenser se trouve en postion #{epenser(twitter_datas)} dans l'array."
+  when "8"
+    puts "Voici une répartition des handle par taille (nb de caractères) :"
+    group_by_size(twitter_datas)
+  else 
+    puts "Entrée inexistante, au revoir !"
+  end
+  # puts "Veux-tu continuer ? O/N"
+  # keep_going = gets.chomp
+  # if keep_going == "N"
+  #   puts "Au revoir, à bientôt !"
+  # elsif keep_going == "O"
+  #   perform
+  # else
+  #   puts "Erreur, tu devais taper 'O' ou 'N'"
+  # end
+end
 
-#regex à utiliser pour /^@+[A-Z]/  ici + veut dire un ou plus
-
-
-five_chrs(twitter_datas)
-
-# def perform
-#   intro
-#   loop do
-#     puts "Tape un chiffre compris entre 1 et 8 :"
-#     answer = gets.chomp
-#     print "> " 
-#     case answer
-#     when "1"
-#       puts "Réponse : Il y en a #{handle_length(twitter_datas)}."
-#     when "2"
-#       puts "Réponse : Le handle le plus court de la liste est #{shortest_string(twitter_datas)}."
-#     when "3"
-#       puts "Réponse : Il y a #{five_chrs(twitter_datas)} de 5 caractères (sans comprendre le @)."
-#     when "4"
-#       puts "Réponse : Il y a #{upper_start(twitter_datas)} handles qui commencent par une majuscule (première lettre juste après le @)."
-#     when "5"
-#       puts "Réponse : "
-#     when "6"
-#       puts "Réponse : "
-#     when "7"
-#       puts "Réponse : "
-#     else 
-#       puts "Réponse : "
-#     end
-#     puts "Veux-tu continuer ? O/N"
-#     keep_going = gets.chomp
-#     if keep_going = "N"
-#       puts "Au revoir, à bientôt !"
-#       break
-#     elsif keep_going != "O" || keep_going != "N"
-#       puts "Erreur, tu devais taper 'O' ou 'N'"
-#       perform
-#     else
-#     end
-#   end
-# end
+perform
