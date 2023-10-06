@@ -68,9 +68,9 @@ def epenser(twitter_datas)
 end
 
 def group_by_size(twitter_datas)
-  new_hash = {}
+  new_hash = {} 
   twitter_datas.each do |handle|
-    handle_length = handle.length - 1
+    handle_length = handle.length
     if new_hash[handle_length].nil?
       new_hash[handle_length] = 1
     else
